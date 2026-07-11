@@ -1,41 +1,23 @@
-Name:		texlive-limecv
-Version:	61199
-Release:	2
+%global tl_name limecv
+%global tl_revision 75301
+
+Name:		texlive-%{tl_name}
+Epoch:		1
+Version:	0.1.12
+Release:	%{tl_revision}.1
 Summary:	A (Xe/Lua)LaTeX document class for curriculum vitae
 Group:		Publishing
 URL:		https://www.ctan.org/tex-archive/macros/latex/contrib/limecv
 License:	lppl1.3c
-Source0:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/limecv.r%{version}.tar.xz
-Source1:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/limecv.doc.r%{version}.tar.xz
-Source2:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/limecv.source.r%{version}.tar.xz
+Source0:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/limecv.r%{tl_revision}.tar.xz
+Source1:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/limecv.doc.r%{tl_revision}.tar.xz
+Source2:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/limecv.source.r%{tl_revision}.tar.xz
 BuildArch:	noarch
-BuildRequires:	texlive-tlpkg
-Requires(pre):	texlive-tlpkg
-Requires(post):	texlive-kpathsea
+BuildSystem:	texlive
+Provides:	texlive(%{tl_name}) = %{tl_revision}
 
 %description
-limecv is a (Xe/Lua)LaTeX document class to write curriculum
-vitae. It is designed with the following design rules: simple,
-elegant and clean. To this end, it offers several environments
-and macros for convenience.
+limecv is a (Xe/Lua)LaTeX document class to write curriculum vitae. It
+is designed with the following design rules: simple, elegant and clean.
+To this end, it offers several environments and macros for convenience.
 
-%prep
-%setup -c -a1 -a2
-%autopatch -p1
-
-%build
-
-%install
-rm -rf tlpkg
-mkdir -p %{buildroot}%{_texmfdistdir}
-cp -a * %{buildroot}%{_texmfdistdir}
-
-%files
-%doc %{_texmfdistdir}/source/latex/limecv
-%{_texmfdistdir}/tex/latex/limecv
-%doc %{_texmfdistdir}/doc/latex/limecv
-
-%post -p %{_sbindir}/texlive.post
-
-%postun
-[ "$1" -eq 0 ] && %{_sbindir}/texlive.post
